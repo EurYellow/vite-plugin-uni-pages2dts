@@ -1,0 +1,35 @@
+{
+  "name": "vite-plugin-uni-pages2dts",
+  "version": "1.0.0",
+  "description": "A Vite plugin to generate TypeScript types for UniApp pages.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "pnpm run build --watch --ignore-watch examples",
+    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "example:uni": "cd examples/my-vue3-project && pnpm run dev",
+    "prepublishOnly": "pnpm run build",
+    "release": "npx bumpp --push --tag --commit && pnpm publish"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "typescript",
+    "uniapp",
+    "pages.json"
+  ],
+  "author": "Jx",
+  "license": "ISC",
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.11.2",
+    "@types/node": "^22.10.1",
+    "bumpp": "^9.8.1",
+    "eslint": "^9.16.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1"
+  },
+  "dependencies": {
+    "unconfig": "^0.6.0"
+  }
+}
