@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-uni-pages2dts",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Vite plugin to generate TypeScript types for UniApp pages.",
   "author": "Jx",
   "license": "ISC",
