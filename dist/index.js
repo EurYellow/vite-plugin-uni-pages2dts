@@ -1,48 +1,12 @@
-"use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-// src/index.ts
-var src_exports = {};
-__export(src_exports, {
-  default: () => vitePluginTemplate
-});
-module.exports = __toCommonJS(src_exports);
-
 // src/context.ts
-var import_path3 = __toESM(require("path"));
+import path from "path";
 
 // src/options.ts
-var import_path = require("path");
+import { resolve } from "path";
 function resolveOptions(userOptions, viteRoot) {
   const { outDir = "src", configSource = "src/pages", dts = true } = userOptions;
   const resolvedConfigSource = [{ files: configSource }];
-  const resolvedDts = !dts ? false : typeof dts === "string" ? dts : (0, import_path.resolve)(viteRoot, "uni-pages.d.ts");
+  const resolvedDts = !dts ? false : typeof dts === "string" ? dts : resolve(viteRoot, "uni-pages.d.ts");
   const resolvedOptions = {
     dts: resolvedDts,
     outDir,
@@ -57,28 +21,28 @@ function resolveOptions(userOptions, viteRoot) {
 var OUTPUT_NAME = "pages.json";
 
 // src/utils.ts
-var import_fs = __toESM(require("fs"));
+import fs from "fs";
 function checkPagesJsonFile(path2) {
   console.log(path2);
-  if (!import_fs.default.existsSync(path2)) {
+  if (!fs.existsSync(path2)) {
     writeFileSync(path2, JSON.stringify({ pages: [{ path: "" }] }, null, 2));
     return false;
   }
   return true;
 }
 function writeFileSync(path2, content) {
-  import_fs.default.writeFileSync(path2, content, { encoding: "utf-8" });
+  fs.writeFileSync(path2, content, { encoding: "utf-8" });
 }
 
 // src/context.ts
-var import_unconfig = require("unconfig");
+import { loadConfig } from "unconfig";
 
 // src/declaration.ts
-var import_promises = require("fs/promises");
-var import_fs2 = require("fs");
-var import_path2 = require("path");
+import { mkdir, readFile, writeFile as writeFile_ } from "fs/promises";
+import { existsSync } from "fs";
+import { dirname } from "path";
 async function writeDeclaration(ctx, filepath) {
-  const originalContent = (0, import_fs2.existsSync)(filepath) ? await (0, import_promises.readFile)(filepath, "utf-8") : "";
+  const originalContent = existsSync(filepath) ? await readFile(filepath, "utf-8") : "";
   const code = getDeclaration(ctx);
   if (!code) return;
   if (code !== originalContent) {
@@ -115,8 +79,8 @@ declare interface Uni {
   return code;
 }
 async function writeFile(filePath, content) {
-  await (0, import_promises.mkdir)((0, import_path2.dirname)(filePath), { recursive: true });
-  return await (0, import_promises.writeFile)(filePath, content, "utf-8");
+  await mkdir(dirname(filePath), { recursive: true });
+  return await writeFile_(filePath, content, "utf-8");
 }
 
 // src/context.ts
@@ -139,11 +103,11 @@ var PageContext = class {
     this.rawOptions = userOptions;
     this.root = viteRoot;
     this.options = resolveOptions(userOptions, this.root);
-    this.resolvedPagesJSONPath = import_path3.default.join(this.root, this.options.outDir, OUTPUT_NAME);
+    this.resolvedPagesJSONPath = path.join(this.root, this.options.outDir, OUTPUT_NAME);
   }
   async loadUserPagesConfig() {
     const configSource = this.options.configSource;
-    const { config, sources } = await (0, import_unconfig.loadConfig)({ cwd: this.root, sources: configSource, defaults: {} });
+    const { config, sources } = await loadConfig({ cwd: this.root, sources: configSource, defaults: {} });
     this.pagesGlobConfig = config;
     this.pageMetaData = config.pages || [];
     this.pagesConfigSourcePaths = sources;
@@ -179,3 +143,6 @@ function vitePluginTemplate(userOptions = {}) {
     }
   };
 }
+export {
+  vitePluginTemplate as default
+};
