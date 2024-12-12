@@ -1,13 +1,14 @@
-import { mkdir, readFile, writeFile as writeFile_ } from 'fs/promises'
-import { existsSync } from 'fs'
 import type { PageContext } from './context'
-import { dirname } from 'path'
+import { existsSync } from 'node:fs'
+import { mkdir, readFile, writeFile as writeFile_ } from 'node:fs/promises'
+import { dirname } from 'node:path'
 
 export async function writeDeclaration(ctx: PageContext, filepath: string) {
   const originalContent = existsSync(filepath) ? await readFile(filepath, 'utf-8') : ''
 
   const code = getDeclaration(ctx)
-  if (!code) return
+  if (!code)
+    return
 
   if (code !== originalContent) {
     await writeFile(filepath, code)
@@ -17,8 +18,8 @@ export function getDeclaration(ctx: PageContext) {
   // const subPagesPath =  ctx.subPageMetaData.map((sub) => sub.pages.map(v => (`"/${normalizePath(join(sub.root, v.path))}"`))).flat()
 
   const subPagesPath = []
-  const tabsPagesPath = ctx.pagesGlobConfig?.tabBar?.list?.map((v) => `"/${v!.pagePath}"`) ?? []
-  const allPagesPath = [...ctx.pageMetaData.filter((page) => !tabsPagesPath.includes(page.path)).map((v) => `"/${v.path}"`), ...subPagesPath]
+  const tabsPagesPath = ctx.pagesGlobConfig?.tabBar?.list?.map(v => `"/${v!.pagePath}"`) ?? []
+  const allPagesPath = [...ctx.pageMetaData.filter(page => !tabsPagesPath.includes(page.path)).map(v => `"/${v.path}"`), ...subPagesPath]
   const code = `/* eslint-disable */
 /* prettier-ignore */
 // @ts-nocheck

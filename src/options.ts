@@ -1,7 +1,7 @@
-import { resolve } from 'path'
 import type { LoadConfigSource } from 'unconfig'
 import type { PagesConfig } from './config'
 import type { UserOptions } from './types'
+import { resolve } from 'node:path'
 
 export function resolveOptions(userOptions: UserOptions, viteRoot: string) {
   const { outDir = 'src', configSource = 'src/pages', dts = true } = userOptions
@@ -15,6 +15,5 @@ export function resolveOptions(userOptions: UserOptions, viteRoot: string) {
     configSource: resolvedConfigSource,
     root: viteRoot,
   }
-  console.log({ resolveOptions: resolvedOptions })
   return resolvedOptions
 }

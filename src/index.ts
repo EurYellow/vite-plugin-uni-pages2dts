@@ -1,4 +1,4 @@
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 import type { UserOptions } from './types'
 import { PageContext } from './context'
 

@@ -1,11 +1,11 @@
-import path from 'path'
-import type { UserOptions, PagePath, PageMetaDatum, SubPageMetaDatum, ResolvedOptions } from './types'
-import { resolveOptions } from './options'
-import { OUTPUT_NAME } from './constant'
-import { checkPagesJsonFile } from './utils'
-import { loadConfig } from 'unconfig'
 import type { PagesConfig } from './config'
+import type { PageMetaDatum, PagePath, ResolvedOptions, SubPageMetaDatum, UserOptions } from './types'
+import path from 'node:path'
+import { loadConfig } from 'unconfig'
+import { OUTPUT_NAME } from './constant'
 import { writeDeclaration } from './declaration'
+import { resolveOptions } from './options'
+import { checkPagesJsonFile } from './utils'
 
 export class PageContext {
   pagesGlobConfig: PagesConfig | undefined
@@ -56,7 +56,8 @@ export class PageContext {
   }
 
   generateDeclaration() {
-    if (!this.options.dts) return
+    if (!this.options.dts)
+      return
 
     return writeDeclaration(this, this.options.dts)
   }
