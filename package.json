@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-uni-pages2dts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Vite plugin to generate TypeScript types for UniApp pages.",
   "type": "module",
   "main": "dist/index.mjs",
