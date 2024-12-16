@@ -6,7 +6,7 @@ export default function vitePluginTemplate(userOptions: UserOptions = {}): Plugi
   let ctx: PageContext
 
   return {
-    name: 'vite-plugin-template',
+    name: 'vite-plugin-uni-pages2dts',
     enforce: 'pre', // post
     apply: 'serve', // apply 亦可以是一个函数
     async configResolved(config) {
